@@ -127,6 +127,7 @@ server {
   listen 80;
   server_name *.id.ramseysolutions.localhost ~^\w+\.id\.ramseysolutions[\.\d]+\.xip\.io$;
   root /Users/jer/Sites/ramsey/access-control-app/public;
+  passenger_app_log_file /Users/jer/Sites/ramsey/access-control-app/log/development.log;
   passenger_enabled on;
   passenger_ruby /Users/jer/.rbenv/shims/ruby;
   passenger_sticky_sessions on;
@@ -137,8 +138,9 @@ For most apps, like `fpu-online`, the server name declaration is a bit simpler: 
 
 _Notes:_
 
-- You will need to restart nginx after making configuration changes: `sudo brew services restart nginx`
-- I use [rbenv][rbenv], so if you are still using RVM, your ruby path will differ from mine. _I am grateful to the creator of RVM - he provided tools that were desperately needed - but I prefer rbenv's Unix-style architecture of multiple smaller utilities and I find rbenv's shims to be a saner solution than RVM's method of commandeering my shell.__
+- You will need to restart nginx after making configuration changes: `sudo brew services restart nginx` (or for an enterprise installation: `sudo brew services restart phusion/passenger/nginx-passenger-enterprise`)
+- I use [rbenv][rbenv], so if you are still using RVM, your ruby path will differ from mine. _I am grateful to the creator of RVM - he provided tools that were desperately needed - but I prefer rbenv's Unix-style architecture of multiple smaller utilities and I find rbenv's shims to be a saner solution than RVM's method of commandeering my shell._
+- More configuration options are documented in the [configuration reference for Passenger + Nginx][passenger-nginx-config-ref]
 
 
 ### Apps ###
@@ -158,5 +160,6 @@ For apps that need addresses outside of `*.test` and xip.io, you will need to ma
 
 [homebrew]: https://brew.sh/
 [passenger]: https://www.phusionpassenger.com/
+[passenger-nginx-config-ref]: https://www.phusionpassenger.com/library/config/nginx/reference/#passenger_app_env
 [passenger-troubleshooting-guide]: https://www.phusionpassenger.com/library/admin/nginx/troubleshooting/ruby/
 [rbenv]: https://github.com/rbenv/rbenv
